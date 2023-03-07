@@ -1,0 +1,149 @@
+---
+- name: Install podman and create our user
+  become: true
+  become_user: "{{ container_run_as_user }}"
+  block:
+    - name: "Ensure /home/{{ container_run_as_user }}/.config/systemd/user/ exists"
+      ansible.builtin.file:
+        path: "/home/{{ container_run_as_user }}/.config/systemd/user/"
+        state: directory
+
+    - name: Run httpd podman container
+      containers.podman.podman_container:
+        name: "{{ container_name }}"
+        image: "{{ container_image }}"
+        state: "{{ container_state | default(omit) }}"
+        recreate: "{{ container_recreate | default(false) }}"
+        detach: "{{ container_detatch | default(omit) }}"
+        exposed_ports: "{{ container_exposed_ports | default(omit) }}"
+        ports: "{{ container_ports | default(omit) }}"
+        generate_systemd:
+          restart_policy: "{{ container_generate_systemd_restart_policy | default('always') }}"
+          names: "{{ container_generate_systemd_names | default(true) }}"
+          new: "{{ container_generate_systemd_new | default(true) }}"
+          path: "/home/{{ container_run_as_user }}/.config/systemd/user/"
+        # todo..
+        # executable:
+        # state:
+        # image:
+        # annotation:
+        # authfile:
+        # blkio_weight:
+        # blkio_weight_device:
+        # cap_add:
+        # cap_drop:
+        # cgroup_parent:
+        # cgroupns:
+        # cgroups:
+        # cidfile:
+        # cmd_args:
+        # conmon_pidfile:
+        # command:
+        # cpu_period:
+        # cpu_rt_period:
+        # cpu_rt_runtime:
+        # cpu_shares:
+        # cpus:
+        # cpuset_cpus:
+        # cpuset_mems:
+        # detach:
+        # debug:
+        # detach_keys:
+        # device:
+        # device_read_bps:
+        # device_read_iops:
+        # device_write_bps:
+        # device_write_iops:
+        # dns:
+        # dns_option:
+        # dns_search:
+        # entrypoint:
+        # env:
+        # env_file:
+        # env_host:
+        # etc_hosts:
+        # expose:
+        # force_restart:
+        # generate_systemd:
+        # gidmap:
+        # group_add:
+        # healthcheck:
+        # healthcheck_interval:
+        # healthcheck_retries:
+        # healthcheck_start_period:
+        # healthcheck_timeout:
+        # hooks_dir:
+        # hostname:
+        # http_proxy:
+        # image_volume:
+        # image_strict:
+        # init:
+        # init_path:
+        # interactive:
+        # ip:
+        # ipc:
+        # kernel_memory:
+        # label:
+        # label_file:
+        # log_driver:
+        # log_level:
+        # log_opt:
+        # mac_address:
+        # memory:
+        # memory_reservation:
+        # memory_swap:
+        # memory_swappiness:
+        # mount:
+        # network:
+        # network_aliases:
+        # no_hosts:
+        # oom_kill_disable:
+        # oom_score_adj:
+        # pid:
+        # pids_limit:
+        # pod:
+        # privileged:
+        # publish:
+        # publish_all:
+        # read_only:
+        # read_only_tmpfs:
+        # recreate:
+        # requires:
+        # restart_policy:
+        # rm:
+        # rootfs:
+        # sdnotify:
+        # secrets:
+        # security_opt:
+        # shm_size:
+        # sig_proxy:
+        # stop_signal:
+        # stop_timeout:
+        # subgidname:
+        # subuidname:
+        # sysctl:
+        # systemd:
+        # timezone:
+        # tmpfs:
+        # tty:
+        # uidmap:
+        # ulimit:
+        # user:
+        # userns:
+        # uts:
+        # volume:
+        # volumes_from:
+        # workdir:
+
+
+    - name: Reload Systemd
+      ansible.builtin.systemd:
+        scope: user
+        daemon_reload: yes
+
+    - name: Enable the Systemd unit
+      ansible.builtin.systemd:
+        scope: user
+        name: "container-{{ container_name }}.service"
+        state: started
+        enabled: yes

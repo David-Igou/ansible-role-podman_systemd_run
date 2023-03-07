@@ -1,0 +1,9 @@
+---
+- name: Include package install tasks
+  ansible.builtin.include_tasks: packages.yml
+
+- name: Include user tasks
+  ansible.builtin.include_tasks: user.yml
+
+- name: Include container tasks
+  ansible.builtin.include_tasks: container.yml
