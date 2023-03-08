@@ -17,11 +17,16 @@
         detach: "{{ container_detatch | default(omit) }}"
         exposed_ports: "{{ container_exposed_ports | default(omit) }}"
         ports: "{{ container_ports | default(omit) }}"
+        env: "{{ container_ports | default(omit) }}"
+        cap_add: "{{ container_ports | default(omit) }}"
         generate_systemd:
           restart_policy: "{{ container_generate_systemd_restart_policy | default('always') }}"
           names: "{{ container_generate_systemd_names | default(true) }}"
           new: "{{ container_generate_systemd_new | default(true) }}"
           path: "/home/{{ container_run_as_user }}/.config/systemd/user/"
+          wants: "{{ container_generate_systemd_wants | default(omit) }}"
+          after: "{{ container_generate_systemd_after | default(omit) }}"
+
         # todo..
         # executable:
         # state:
