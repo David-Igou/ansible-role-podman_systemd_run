@@ -17,8 +17,8 @@
         detach: "{{ container_detatch | default(omit) }}"
         exposed_ports: "{{ container_exposed_ports | default(omit) }}"
         ports: "{{ container_ports | default(omit) }}"
-        env: "{{ container_ports | default(omit) }}"
-        cap_add: "{{ container_ports | default(omit) }}"
+        env: "{{ container_env | default(omit) }}"
+        cap_add: "{{ container_cap_add | default(omit) }}"
         generate_systemd:
           restart_policy: "{{ container_generate_systemd_restart_policy | default('always') }}"
           names: "{{ container_generate_systemd_names | default(true) }}"
