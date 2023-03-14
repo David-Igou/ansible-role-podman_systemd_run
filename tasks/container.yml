@@ -10,22 +10,22 @@
 
     - name: Run httpd podman container
       containers.podman.podman_container:
-        name: "{{ container_name }}"
-        image: "{{ container_image }}"
-        state: "{{ container_state | default(omit) }}"
-        recreate: "{{ container_recreate | default(false) }}"
-        detach: "{{ container_detatch | default(omit) }}"
-        exposed_ports: "{{ container_exposed_ports | default(omit) }}"
-        ports: "{{ container_ports | default(omit) }}"
-        env: "{{ container_env | default(omit) }}"
-        cap_add: "{{ container_cap_add | default(omit) }}"
+        name: "{{ name }}"
+        image: "{{ image }}"
+        state: "{{ state | default(omit) }}"
+        recreate: "{{ recreate | default(false) }}"
+        detach: "{{ detatch | default(omit) }}"
+        exposed_ports: "{{ exposed_ports | default(omit) }}"
+        ports: "{{ ports | default(omit) }}"
+        env: "{{ env | default(omit) }}"
+        cap_add: "{{ cap_add | default(omit) }}"
         generate_systemd:
-          restart_policy: "{{ container_generate_systemd_restart_policy | default('always') }}"
-          names: "{{ container_generate_systemd_names | default(true) }}"
-          new: "{{ container_generate_systemd_new | default(true) }}"
+          restart_policy: "{{ generate_systemd_restart_policy | default('always') }}"
+          names: "{{ generate_systemd_names | default(true) }}"
+          new: "{{ generate_systemd_new | default(true) }}"
           path: "/home/{{ container_run_as_user }}/.config/systemd/user/"
-          wants: "{{ container_generate_systemd_wants | default(omit) }}"
-          after: "{{ container_generate_systemd_after | default(omit) }}"
+          wants: "{{ generate_systemd_wants | default(omit) }}"
+          after: "{{ generate_systemd_after | default(omit) }}"
 
         # todo..
         # executable:
