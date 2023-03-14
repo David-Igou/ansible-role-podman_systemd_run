@@ -10,7 +10,7 @@
 
     - name: Run httpd podman container
       containers.podman.podman_container:
-        name: "{{ name }}"
+        name: "{{ container_name }}"
         image: "{{ image }}"
         state: "{{ state | default(omit) }}"
         recreate: "{{ recreate | default(false) }}"
