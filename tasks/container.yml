@@ -12,9 +12,9 @@
       containers.podman.podman_container:
         name: "{{ container_name }}"
         image: "{{ image }}"
-        state: "{{ state | default(omit) }}"
-        recreate: "{{ recreate | default(false) }}"
-        restart: "{{ restart | default(false) }}"
+        state: "{{ state | default(created) }}"
+        recreate: "{{ recreate | default(true) }}"
+        restart: "{{ restart | default(true) }}"
         detach: "{{ detatch | default(omit) }}"
         exposed_ports: "{{ exposed_ports | default(omit) }}"
         ports: "{{ ports | default(omit) }}"
