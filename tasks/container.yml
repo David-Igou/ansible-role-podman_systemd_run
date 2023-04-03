@@ -14,6 +14,7 @@
         image: "{{ image }}"
         state: "{{ state | default(omit) }}"
         recreate: "{{ recreate | default(false) }}"
+        restart: "{{ restart | default(false) }}"
         detach: "{{ detatch | default(omit) }}"
         exposed_ports: "{{ exposed_ports | default(omit) }}"
         ports: "{{ ports | default(omit) }}"
