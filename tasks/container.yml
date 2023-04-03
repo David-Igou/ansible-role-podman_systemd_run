@@ -21,6 +21,7 @@
         env_file: "{{ env_file | default(omit) }}"
         cap_add: "{{ cap_add | default(omit) }}"
         volumes: "{{ volumes | default(omit) }}"
+        device: "{{ device | default(omit) }}"
         sysctl: "{{ sysctl | default(omit) }}"
         user: "{{ user | default(omit) }}"
         generate_systemd:
