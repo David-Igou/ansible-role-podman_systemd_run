@@ -18,7 +18,11 @@
         exposed_ports: "{{ exposed_ports | default(omit) }}"
         ports: "{{ ports | default(omit) }}"
         env: "{{ env | default(omit) }}"
+        env_file: "{{ env_file | default(omit) }}"
         cap_add: "{{ cap_add | default(omit) }}"
+        volumes: "{{ volumes | default(omit) }}"
+        sysctl: "{{ sysctl | default(omit) }}"
+        user: "{{ user | default(omit) }}"
         generate_systemd:
           restart_policy: "{{ generate_systemd_restart_policy | default('always') }}"
           names: "{{ generate_systemd_names | default(true) }}"
